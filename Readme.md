@@ -19,7 +19,7 @@ It's also very useful if you want to clean up your computer from time to time!
 -   **Offline Functionality**: Completely local analysis. No data leaves your machine.
 -   **Deep Directory Scan**: Scans any directory and all of its subdirectories.
 -   **System Directory Handling**: Capable of scanning system directories and even entire drives without crashing.
--   **Complexity Pre-Recognition**: Preliminary complexity check to avoid unnecessary scans and false positives, such as simple traffic signs.
+-   **Complexity Pre-Recognition**: Preliminary complexity check to avoid unnecessary scans and false positives, such as simple traffic signs.#, icons, or assets of Frameworks.
 -   **Real-time HTML Reports**: Generates an HTML report in real-time that can be accessed during the scan.
 -   **Report Checkpoints**: Automatically saves report checkpoints every time the HTML report reaches 200KB.
 -   **Cache Mechanism**: Utilizes a cache for problematic files. Cache is cleared when it reaches 15MB.
