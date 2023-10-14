@@ -71,9 +71,8 @@ Replace `script_name.py` with the actual script's filename.
 
 The tool can be dockerized for ease of deployment. Mount your input and output directories accordingly when running the Docker container.
 
-bashCopy code
 
-`docker run -v /path/to/input:/input -v /path/to/output:/output image-scanner:latest`# NudeNet Image Scanner
+`TO BE DONE!`
 
 ## Overview
 
