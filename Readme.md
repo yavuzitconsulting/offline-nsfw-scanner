@@ -8,7 +8,7 @@ This is an offline tool, written in python, designed to scan local directories f
 It operates completely locally; no data leaves your machine *
 
 (as per the requirements.txt configured version of the NudeNet library, which is 2.0.9, if you use another version, please ensure they did not update the code to use web-services!)
-I did not perform an audit on the nudenet library. Feel free to check it out yourself, i see it is running without problems without an internet connection, but i did not conduct network analysis to see if it is communicating to a server when connection is availble.
+**I did not perform an audit on the nudenet library. Feel free to check it out yourself, i see it is running without problems without an internet connection, but i did not conduct network analysis to see if it is communicating to a server when connection is availble.**
 
 
 The tool is ideal for system administrators who need to maintain the integrity of local file servers, among other use-cases.
