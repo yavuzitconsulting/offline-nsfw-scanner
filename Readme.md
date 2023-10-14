@@ -118,14 +118,65 @@ You can install all required Python packages by running the following command. A
 
 Alternatively, you can use the Dockerized version of the tool, which eliminates the need for manual package installation.
 
+  
+
 ## Running the Script
 
+  
+
 To run the script, navigate to the directory containing the script and execute:
+ 
+
+`python script.py -h`
+  
+
+-h will tell you that you can pass the PATH and optionally the score threshold as an argument.
+  
+
+example
+
+`python script.py C:/`
+
+  
+
+This will scan DRIVE C completely, including Recycle Bin.
+By default, it will set the detection threshold to 0.6.
+This means only detections of a confidence level (score) of 0.6 and higher will be recognized.
+Which seems to be the ideal setting as per my personal experience.  
+
+While running, the script will create these directories:
+
+  
+
+`reports`
+
+`logs`
+
+`cache`
+
+  
+
+reports will contain a directory with the timestamp you started the scan, each scan will create a new report directory. 
+
+the directory will contain HTML files with a maximum size of 200KB, the files will be rolling, meaning if you have a lot of detections, there might be multiple files created with each having up to 200KB.
+
+`The REPORT HTMLs ARE IN THEIR RESPECTIVE REPORT DIRECTORY!`
+  
+
+You can open the HTML files as soon as they are created, just know that, while the tool is running, it will append to the file, but the file will always be in a state that can be rendered, enabling you to view the progress and update the progress by pressing F5 (until you reach 200KB, then you'll need to open the next file, i might add that information to the HTML with an update so you can click through the reports and stay in the browser).
+
+  
+
+Logs will contain error logs.
+  
+
+The cache directory has a maximum size of 15MB, it will be cleaned when the program finishes successfully, when you stop it prematurely or it crashes, it will be dirty, but the next run will clean it again.
+
+**Just know that on a crash or abort, there might be sensitive images in that directory!**
 
 
-`python script_name.py` 
 
-Replace `script_name.py` with the actual script's filename.
+
 
 ## Docker Usage
 
