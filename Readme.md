@@ -7,7 +7,8 @@ Using notAI-tech/NudeNet (https://github.com/notAI-tech/NudeNet)
 This is an offline tool, written in python, designed to scan local directories for explicit or inappropriate images using the NudeNet library. 
 It operates completely locally; no data leaves your machine *
 
-(as per the requirements.txt configured version of the NudeNet library, if you use another version, please ensure they did not update the code to use web-services!)
+(as per the requirements.txt configured version of the NudeNet library, which is 2.0.9, if you use another version, please ensure they did not update the code to use web-services!)
+I did not perform an audit on the nudenet library. Feel free to check it out yourself, i see it is running without problems without an internet connection, but i did not conduct network analysis to see if it is communicating to a server when connection is availble.
 
 
 The tool is ideal for system administrators who need to maintain the integrity of local file servers, among other use-cases.
@@ -138,10 +139,15 @@ The tool can be dockerized for ease of deployment. Mount your input and output d
 I uploaded an exemplary image to NudeNet to visualize what NudeNet sees:
 
 This is an example for positive detection:
-![example image with positive detection](testimage.png)
+
+![example image with positive detection](https://raw.githubusercontent.com/yavuzitconsulting/offline-nudity-scanner/master/readme_data/positive_detection.png)
 
 And an example for false positive detection that explains why you sometimes see false positives:
-![example image with false positive detection](testimage.png)
+![example image with false positive detection](https://raw.githubusercontent.com/yavuzitconsulting/offline-nudity-scanner/master/readme_data/false_positive_detection.png)
+
+You can see that the general form is recognized, i never analyzed the nudenet sourcecode, but i assume it is via conture and shape detection, since algorithm do not have a general understanding of what they are seeing, this can lead to false positives that have a very high confidence value (score).
+But sadly, adjusting the minimum score to filter to a higher value might skip some actual positives.
+I think 0.6 to 0.7 is a very good value to work with.
 
 ## Disclaimer
 
