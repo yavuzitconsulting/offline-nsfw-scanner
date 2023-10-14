@@ -12,7 +12,8 @@ It operates completely locally; no data leaves your machine *
 
 
 The tool is ideal for system administrators who need to maintain the integrity of local file servers, among other use-cases.
-It's also very useful if you want to clean up your computer from time to time!
+
+**The tool enables you to conduct "Audits", it will store the report files based on their run-start time, so you can just automatically conduct these tests and collect the reports, ideally, the results should be pushed into a more advanced AI that can execute the actual Audit / Data review, this way, administrators do not have any human intervention, in a future version, i might integrate the YITCs own trained AI into the process and provide the model, but to this day, no such model exists and since the tool is supposed to be data-safe, i will not provide an API**
 
 ### Features
 
