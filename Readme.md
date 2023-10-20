@@ -53,7 +53,7 @@ While the tool is pretty reliable, it may produce a number of false positives, e
 
 Install required Python packages. You can alternatively use the Dockerized version of the tool.
 
-bashCopy code
+
 
 `pip install Pillow nudenet tqdm opencv-python` 
 
@@ -61,7 +61,7 @@ bashCopy code
 
 To run the script, navigate to the directory containing the script and execute:
 
-bashCopy code
+
 
 `python script_name.py` 
 
