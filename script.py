@@ -23,6 +23,7 @@ all_labels = [
     "MALE_GENITALIA_EXPOSED",
 ]
 
+found = 0
 
 default_detection_score = 0.6
 
@@ -320,6 +321,7 @@ def is_complex_image(image_path):
     return len(contours_thresh) > 5 or len(contours_edges) > 5
 
 def scan_directory(directory, report_number, error_log_number):
+    global found 
     images_with_detections = []
     nude_detector = NudeDetector()
 
@@ -399,6 +401,7 @@ def scan_directory(directory, report_number, error_log_number):
 
 
                 if detected:
+                    found += 1
                     images_with_detections.append(full_path)
                     print(f"Scanning directory {directory} for nude images...")
                     print(f"Detected: {sanitized_filename}")
@@ -446,3 +449,4 @@ def main():
 if __name__ == "__main__":
     main()
     clean_cache_directory('cache', 1) #clean after yourself man..
+    print("FOUND: " + str(found))
