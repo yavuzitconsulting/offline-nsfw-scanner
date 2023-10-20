@@ -55,7 +55,7 @@ Install required Python packages. You can alternatively use the Dockerized versi
 
 
 
-`pip install Pillow nudenet tqdm opencv-python` 
+`pip install -r requirements.txt` 
 
 ## Running the Script
 
