@@ -1,6 +1,9 @@
 
 # Offline NSFW Image Scanner
-Using notAI-tech/NudeNet (https://github.com/notAI-tech/NudeNet)
+Offline NSFW / Nudity detector based on notAI-tech/NudeNet (https://github.com/notAI-tech/NudeNet).
+This tool can be used to scan entire System drives, external drives, usb sticks or any other storage media.
+When scanning the system, it takes system directories into account (when run as administrator) and can even find stuff hidden in WSL, Recycle Bin and more.
+Easy-to-use tool to detect adult content / restricted content on your own devices, on network devices, on fileservers and more.
 
 ## Overview
 
