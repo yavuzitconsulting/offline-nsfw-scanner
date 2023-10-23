@@ -1,5 +1,5 @@
 
-# Offline Nude Image Scanner
+# Offline NSFW Image Scanner
 Using notAI-tech/NudeNet (https://github.com/notAI-tech/NudeNet)
 
 ## Overview
