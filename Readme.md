@@ -24,12 +24,14 @@ The tool is ideal for system administrators who need to maintain the integrity o
 -   **Deep Directory Scan**: Scans any directory and all of its subdirectories.
 -   **System Directory Handling**: Capable of scanning system directories and even entire drives without crashing.
 -   **Complexity Pre-Recognition**: Preliminary complexity check to avoid unnecessary scans and false positives, such as simple traffic signs.#, icons, or assets of Frameworks.
+-   **Fine-Grained Recognition**: The NudeNet library scans the images and sorts them based on a list of labels such as "Covered_Breast, Exposed_Breast" and more, it then applies confidence levels to these detections.
 -   **Real-time HTML Reports**: Generates an HTML report in real-time that can be accessed during the scan.
 -   **Report Checkpoints**: Automatically saves report checkpoints every time the HTML report reaches 200KB.
 -   **Cache Mechanism**: Utilizes a cache for problematic files (meaning files with long filenames, strange characters, emojis in their name). Cache is cleared when it reaches 15MB.
--   **Robust Detection**: Can pretty reliably detect a wide variety of explicit situations, including those with multiple people and positions. Images are only considered positively detected when NudeNet is at least 60% sure (a score of 0.6 or above for any matched class).
+-   **Robust Detection**: Can pretty reliably detect a wide variety of explicit situations, including those with multiple people and positions. Images are only considered positively detected when NudeNet is at least 60% sure (a score of 0.6 or above for any matched class). 
 -   **HTML Report Features**: The HTML report is blurred by default for privacy and contains options to copy image paths to clipboard and to open full-sized images.
 -   **Docker Support**: The tool can be dockerized, and both input and output directories can be mounted.
+-   **Customization**: The detection is improved by checking the confidence level of each detection and calculating the median, the user can pass the "--minscore" argument to configure the median, the default is 0.6, higher values lead to less false-positives, but also more misses.
 
 ## Use-Cases
 
