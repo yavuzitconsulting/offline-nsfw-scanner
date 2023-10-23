@@ -7,7 +7,7 @@ Using notAI-tech/NudeNet (https://github.com/notAI-tech/NudeNet)
 This is an offline tool, written in python, designed to scan local directories for explicit or inappropriate images using the NudeNet library. 
 It operates completely locally; no data leaves your machine *
 
-(as per the requirements.txt configured version of the NudeNet library, which is 2.0.9, if you use another version, please ensure they did not update the code to use web-services!)
+(as per the current version of the NudeNet library, which is 2.0.9, if you use another version, please ensure they did not update the code to use web-services!)
 **I did not perform an audit on the nudenet library. Feel free to check it out yourself, i see it is running without problems without an internet connection, but i did not conduct network analysis to see if it is communicating to a server when connection is availble.**
 
 

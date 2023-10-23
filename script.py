@@ -4,14 +4,11 @@ from PIL import Image
 from nudenet import NudeDetector
 from tqdm import tqdm
 import sys
-import re
 import shutil
 from datetime import datetime
-import hashlib
 import glob
 import uuid
 import cv2
-import webbrowser
 
 all_labels = [
     "BUTTOCKS_EXPOSED",
@@ -26,6 +23,8 @@ all_labels = [
 found = 0
 
 default_detection_score = 0.6
+
+previous_report_number = None  # Initialize the previous report number
 
 def create_cache_directory():
     cache_dir = 'cache'
@@ -55,7 +54,10 @@ def get_latest_report_directory():
 
     return latest_directory
 
-def get_report_filename(report_number):
+def get_report_filename(report_number, local = False):
+    if local == True:
+        report_filename = f'nudenet_report_{report_number}.html'
+        return report_filename
     # Get the latest report directory
     latest_directory = get_latest_report_directory()
 
@@ -74,11 +76,18 @@ def get_report_filename(report_number):
     # Return a default path if there are no report directories
     return f'reports/nudenet_report_{report_number}.html'
 
-def create_new_report(report_number):
+def create_new_report(report_number, summary=False):
+    if summary:
+        report_file = get_report_filename(report_number)
+        with open(report_file, 'w') as report:
+            report.write(get_report_summary())
+        return         
+                
     report_file = get_report_filename(report_number)
     with open(report_file, 'w') as report:
-        report.write(get_report_header())
-import os  # Importing os module
+        report.write(get_report_header(report_number))
+    
+
 
 def update_report(report_file, image_path, matched_classes):
     # Replace single backslashes with double backslashes
@@ -110,19 +119,13 @@ def update_report(report_file, image_path, matched_classes):
         """)
 
 
-def get_report_header():
-    return f"""
+def get_report_header(report_number):
+    header = f"""
         <!DOCTYPE html>
         <html>
         <head>
             <title>NudeNet Detection Report</title>
             <style>
-                body {{
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                }}
-
                 ul {{
                     list-style: none;
                     padding: 0;
@@ -130,15 +133,14 @@ def get_report_header():
                     flex-wrap: wrap;
                     justify-content: center;
                 }}
-
                 li {{
                     margin: 10px;
                     text-align: center;
                     display: flex;
                     border: 1px dotted;
-                    border-radius: 5px;
+                    border-radius: 20px;
+                    background-color: dimgrey;
                 }}
-
                 img, .file-path-label {{
                     cursor: pointer;
                     transition: transform 0.1s ease-in-out;
@@ -146,60 +148,79 @@ def get_report_header():
                     word-wrap: break-word;
                     margin-bottom: 0.7rem;
                 }}
-
-               
                 img {{
                     width: 150px;
                     height: 150px;
                     filter: blur(20px);
                     cursor: pointer;
-                    transition: transform 0.2s;  /* Updated */
+                    transition: transform 0.2s;
                 }}
-                
-                
                 img:hover {{
-                    transform: scale(2);  /* Updated */
+                    transform: scale(2);
                 }}
-
                 .file-info {{
-                    width:300px;
+                    width: 300px;
                     display: flex;
-                    flex-direction:column;
+                    flex-direction: column;
                     justify-content: space-between;
                 }}
-
                 .clicked {{
                     transform: scale(0.95);
                 }}
-                
-                
                 .zoom-container {{
                     position: relative;
                     width: 150px;
                     height: 150px;
                     overflow: hidden;
+                    border-radius: 25px;
                 }}
-
                 .zoom-container img {{
                     width: 100%;
                     height: auto;
                     transition: transform 0.2s;
                     filter: blur(20px);
+                    border-radius: 25px;
                 }}
-
                 .zoom-container img.unblurred:hover {{
-                    transform: scale(2);  /* Adjust scale factor as needed */
+                    transform: scale(2);
                     overflow: auto;
                 }}
-                
-                .average-scores{{
+                .average-scores {{
                     font-size: small;
                 }}
-                
-                .clipboard-button{{  
-                margin-top: 0.5rem;
+                .clipboard-button {{
+                    margin-top: 0.5rem;
+                }}
+                .clipboard-button Button {{   
+                    background-color: darkslategrey;
+                }}
+                 body {{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    overflow: auto;  /* Make sure this is not set to 'hidden' */
+                    background-color: #4d4a4a;
                 }}
 
+                .controls {{
+                    display: flex;
+                    width: 100%;
+                    justify-content: center;
+                    flex-direction: column;
+                    background-color: #213636;
+                    position: sticky;
+                    top: 0;  /* Specify a top value for sticky positioning */
+                    z-index: 999;
+                    padding: 0.3rem;
+                }}
+                .blurcontrols{{              
+                    display: flex;
+                    justify-content: center;
+                }}
+                .report-navigation{{                  
+                    display: flex;
+                    justify-content: center;
+                }}
             </style>
             <script>
                 function copyToClipboard(text) {{
@@ -210,12 +231,10 @@ def get_report_header():
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
                 }}
-
-                   function toggleBlur() {{
+                function toggleBlur() {{
                     const images = document.querySelectorAll('.zoom-container img');
                     const blurCheckbox = document.getElementById('blurCheckbox');
                     const blurValue = blurCheckbox.checked ? 'blur(20px)' : 'none';
-
                     images.forEach(img => {{
                         img.style.filter = blurValue;
                         if (blurValue === 'none') {{
@@ -225,7 +244,6 @@ def get_report_header():
                         }}
                     }});
                 }}
-
                 function animateClick(event) {{
                     const element = event.target;
                     element.classList.add('clicked');
@@ -234,10 +252,98 @@ def get_report_header():
             </script>
         </head>
         <body>
+        <div class="controls">
+        <div class="blurcontrols">
             <label for="blurCheckbox">Blur Images</label>
             <input type="checkbox" id="blurCheckbox" checked onchange="toggleBlur()">
-            <ul onclick="animateClick(event)">
+        </div>
+        <div class="report-navigation">
     """
+    
+    if previous_report_number:
+        header += f'<a class="report-previous" href="{get_report_filename(previous_report_number, True)}">Previous Report</a>&nbsp;&nbsp;|'
+        
+    if report_number > 0:
+        header += f'&nbsp;&nbsp;&nbsp;&nbsp;<a class="report-next" href="{get_report_filename(report_number + 1, True)}">Next Report</a>'
+
+    header += f"""
+        </div>
+        </div>
+            <ul onclick="animateClick(event)">
+        </body>
+        </html>
+    """
+    
+    return header
+
+def get_report_summary():
+    content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>NudeNet Detection Report</title>
+            <style>
+                    body {{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    overflow: auto;  /* Make sure this is not set to 'hidden' */
+                    background-color: #4d4a4a;
+                }}
+
+                .controls {{
+                    display: flex;
+                    width: 100%;
+                    justify-content: center;
+                    flex-direction: column;
+                    background-color: #213636;
+                    position: sticky;
+                    top: 0;  /* Specify a top value for sticky positioning */
+                    z-index: 999;
+                    padding: 0.3rem;
+                }}
+
+                .report-navigation{{                  
+                    display: flex;
+                    justify-content: center;
+                }}
+                .summary-info{{
+                    margin-top: 3rem;
+                }}
+                .summary-line{{
+                    display:flex;
+                }}
+                .title{{
+                    margin-bottom: 2rem;
+                }}
+            </style>
+        </head>
+        <body>
+        <div class="controls">
+        <div class="report-navigation">
+    """
+    
+    if previous_report_number:
+        content += f'<a class="report-previous" href="{get_report_filename(previous_report_number, True)}">Previous Report</a>'
+      
+    content += f"""
+        </div>
+        </div>
+            <div class="summary-info">
+                <div class="title">
+                ANALYSIS
+                </div>
+            <div class="summary-line">
+            <div class="label">Found: </div>
+            <div class="result">{str(found)}</div>
+            </div>
+            </div>
+        </body>
+        </html>
+    """
+    
+    return content
+
 
 
 
@@ -321,6 +427,7 @@ def is_complex_image(image_path):
     return len(contours_thresh) > 5 or len(contours_edges) > 5
 
 def scan_directory(directory, report_number, error_log_number):
+    global previous_report_number
     global found 
     images_with_detections = []
     nude_detector = NudeDetector()
@@ -403,13 +510,16 @@ def scan_directory(directory, report_number, error_log_number):
                 if detected:
                     found += 1
                     images_with_detections.append(full_path)
-                    print(f"Scanning directory {directory} for nude images...")
+                    print(f"Scanning directory {directory} for NSFW images...")
                     print(f"Detected: {sanitized_filename}")
 
                     current_report_size = os.path.getsize(get_report_filename(report_number))
                     if current_report_size >= 200 * 1024:
-                        report_number += 1
+                        previous_report_number = report_number  # Update the previous report number
+                        report_number += 1                        
                         create_new_report(report_number)
+                        
+
 
                     update_report(get_report_filename(report_number), full_path, matched_classes)
 
@@ -419,9 +529,11 @@ def scan_directory(directory, report_number, error_log_number):
 
         pbar.close()  # Close the progress bar for the current directory
 
+    create_new_report(report_number, True)
     return images_with_detections
 
 def main():
+    global default_detection_score
     parser = argparse.ArgumentParser(description='Scan a directory for nude images and generate an HTML report.')
     parser.add_argument('directory', type=str, help='Directory to scan for images')
     # Add an argument for the detection score
