@@ -5,8 +5,21 @@ This tool can be used to scan entire System drives, external drives, usb sticks 
 When scanning the system, it takes system directories into account (when run as administrator) and can even find stuff hidden in WSL, Recycle Bin and more.
 Easy-to-use tool to detect adult content / restricted content on your own devices, on network devices, on fileservers and more.
 
-## Overview
+## It's easy! (TL;DR)
+Don't be afraid stranger! 
+It's easier than it looks!
+While this readme file has lots of text for you to read, if you're just looking for a quick and easy tool to use, this is where the meat is at!
 
+Given you have python and pip installed, clone or download the repo, then just follow the setup instructions (look for the setup step below).
+
+Then, in an elevated (run as administrator) powershell terminal, run 
+"python script.py C:/" (where "C" should be your drive of choice, or instead of C:/ you give an entire path to a directory).
+
+The tool will run, and when it finishes, it will show how many explicit images have been found in the console.
+
+It will create a directory "report_xxxx" in the "reports" subdirectory, in that directory, you can find a list of html files, just click and open it to view the scan results and start cleaning!
+
+## Overview
 This is an offline tool, written in python, designed to scan local directories for explicit or inappropriate images using the NudeNet library. 
 It operates completely locally; no data leaves your machine *
 
