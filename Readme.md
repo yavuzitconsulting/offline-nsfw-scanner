@@ -48,11 +48,8 @@ While the tool is pretty reliable, it may produce a number of false positives, e
 ## Requirements
 
 -   Python 3.x
--   PIL (Pillow)
--   NudeNet
--   tqdm
--   cv2 (OpenCV)
--   webbrowser
+-   Pip
+-   a webbrowser
 
 ## Installation
 
