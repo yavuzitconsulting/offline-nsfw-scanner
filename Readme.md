@@ -66,21 +66,32 @@ While the tool is pretty reliable, it may produce a number of false positives, e
 
 ## Installation
 
-Install required Python packages. You can alternatively use the Dockerized version of the tool.
+Clone or download the repository.
+In the root directory of this repository, install required Python packages. 
+You can alternatively use the Dockerized version of the tool.
 
-
+To install the required packages, run:
 
 `pip install -r requirements.txt` 
+
 
 ## Running the Script
 
 To run the script, navigate to the directory containing the script and execute:
 
 
+`python script.py [YOUR PATH]` 
 
-`python script_name.py` 
+Replace `[YOUR PATH]` with the actual directory path or drive, for example:
 
-Replace `script_name.py` with the actual script's filename.
+
+`python script.py C:/` 
+
+if you just run
+
+`python script.py` 
+
+It will display all possible arguments and options.
 
 ## Docker Usage
 
