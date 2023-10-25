@@ -2,4 +2,4 @@ python38.zip
 .
 
 # Uncomment to run site.main() automatically
-#import site
+import site
