@@ -3,16 +3,29 @@
 REM Check if the virtual environment already exists
 if not exist "venv\" (
     echo Creating a virtual environment...
-    python-3.8.0-embed-win32\python.exe get-pip.py
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\pip.exe install --upgrade pip
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\pip.exe install Pillow --only-binary=:all:
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\pip.exe install wheel
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\pip.exe install virtualenv
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\virtualenv.exe venv
+
+:: Install pip
+    python-3.8.0-embed-win32\python.exe get-pip.py --no-cache-dir
+
+:: Upgrade pip
+    python-3.8.0-embed-win32\Scripts\pip.exe install --upgrade pip --no-cache-dir --force-reinstall
+
+:: Install Pillow using only binaries
+    python-3.8.0-embed-win32\Scripts\pip.exe install Pillow --only-binary=:all: --no-cache-dir --force-reinstall
+
+:: Install wheel
+    python-3.8.0-embed-win32\Scripts\pip.exe install wheel --no-cache-dir --force-reinstall
+
+:: Install virtualenv
+    python-3.8.0-embed-win32\Scripts\pip.exe install virtualenv --no-cache-dir --force-reinstall
+
+:: Create a virtual environment
+    python-3.8.0-embed-win32\Scripts\virtualenv.exe venv
+
     echo Activating virtual environment...
     call venv\Scripts\activate
     echo Installing requirements...
-    C:\Sources\offline-nsfw-scanner\python-3.8.0-embed-win32\Scripts\pip.exe install --no-cache-dir --force-reinstall -r requirements.txt --only-binary=:all:
+    python-3.8.0-embed-win32\Scripts\pip.exe install --no-cache-dir --force-reinstall -r requirements.txt --only-binary=:all:
 ) else (
     echo Virtual environment already exists.
     echo Activating existing virtual environment...

@@ -2,3 +2,13 @@
 /reports
 /cache
 /logs
+/python-3.8.0-embed-win32/Lib/site-packages/PIL
+/python-3.8.0-embed-win32/Lib/site-packages/Pillow-9.5.0.dist-info
+/python-3.8.0-embed-win32/Lib/site-packages/__pycache__
+/python-3.8.0-embed-win32/Lib/site-packages/_distutils_hack
+/python-3.8.0-embed-win32/Lib/site-packages/colorama-0.4.6.dist-info
+/python-3.8.0-embed-win32/Lib/site-packages/colorama
+/python-3.8.0-embed-win32/Lib/site-packages/coloredlogs-15.0.1.dist-info
+/python-3.8.0-embed-win32/Lib/site-packages
+/python-3.8.0-embed-win32/Scripts
+/python-3.8.0-embed-win32/share/man/man1
