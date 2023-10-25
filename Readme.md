@@ -10,14 +10,9 @@ Don't be afraid stranger!
 It's easier than it looks!
 While this readme file has lots of text for you to read, if you're just looking for a quick and easy tool to use, this is where the meat is at!
 
-Given you have python and pip installed, clone or download the repo, then just follow the setup instructions (look for the setup step below).
+Just clone or download this repository and run "start.bat", that's it!
 
-Then, in an elevated (run as administrator) powershell terminal, run 
-"python script.py C:/" (where "C" should be your drive of choice, or instead of C:/ you give an entire path to a directory).
-
-The tool will run, and when it finishes, it will show how many explicit images have been found in the console.
-
-It will create a directory "report_xxxx" in the "reports" subdirectory, in that directory, you can find a list of html files, just click and open it to view the scan results and start cleaning!
+The tool comes with its own python executable and virtual environment.
 
 ## Overview
 This is an offline tool, written in python, designed to scan local directories for explicit or inappropriate images using the NudeNet library. 
@@ -33,6 +28,8 @@ The tool is ideal for system administrators who need to maintain the integrity o
 
 ### Features
 
+
+-   **Easy-To_use**: No Prerequisites! I'm shipping a compatible python version and setting up a virtual environment, just run "start.bat"!
 -   **Offline Functionality**: Completely local analysis. No data leaves your machine.
 -   **Deep Directory Scan**: Scans any directory and all of its subdirectories.
 -   **System Directory Handling**: Capable of scanning system directories and even entire drives without crashing.
@@ -60,22 +57,19 @@ While the tool is pretty reliable, it may produce a number of false positives, e
 
 ## Requirements
 
--   Python 3.x
--   Pip
--   a webbrowser
+Windows 10 or higher
 
 ## Installation
 
 Clone or download the repository.
-In the root directory of this repository, install required Python packages. 
-You can alternatively use the Dockerized version of the tool.
 
-To install the required packages, run:
+Run "start.bat"
 
-`pip install -r requirements.txt` 
+Wait for the setup to finish, the CMD will prompt you to enter the directory to scan.
+You can enter entire drives such as "C:"
+Then hit Enter, wait for it to finish, the results are in the "reports" directory.
 
-
-## Running the Script
+## Running the Script (manually)
 
 To run the script, navigate to the directory containing the script and execute:
 
