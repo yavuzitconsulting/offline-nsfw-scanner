@@ -37,7 +37,7 @@ def get_cache_filename(filename):
 def create_reports_directory():
     current_datetime = datetime.now()
     formatted_date = current_datetime.strftime("%d%m%Y_%H%M")
-    reports_dir = "reports\\" + f'reports_{formatted_date}'
+    reports_dir = os.path.join("reports", f"reports_{formatted_date}")
 
     if not os.path.exists(reports_dir):
         os.makedirs(reports_dir)
@@ -77,15 +77,16 @@ def get_report_filename(report_number, local = False):
     return f'reports/nudenet_report_{report_number}.html'
 
 def create_new_report(report_number, summary=False):
-    if summary:
-        report_file = get_report_filename(report_number)
-        with open(report_file, 'w') as report:
-            report.write(get_report_summary())
-        return         
-                
     report_file = get_report_filename(report_number)
-    with open(report_file, 'w') as report:
-        report.write(get_report_header(report_number))
+    if not os.path.exists(report_file):  # Check if the file does not exist, create it
+        with open(report_file, 'w') as report:
+            if summary:
+                report.write(get_report_summary())
+            else:
+                report.write(get_report_header(report_number))
+    else:
+        print(f"Report file already exists: {report_file}")  # Debug print
+
     
 
 
